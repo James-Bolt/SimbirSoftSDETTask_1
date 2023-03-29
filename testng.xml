@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="TestSuite" thread-count="7" parallel="tests">
+    <test name="createAnAccountTest">
+        <classes>
+            <class name="TestCases">
+                <methods>
+                    <include name="createAnAccountTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="addAccountNumbersTest">
+        <classes>
+            <class name="TestCases">
+                <methods>
+                    <include name="addAccountNumbersTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="EnterToAccountTest">
+        <classes>
+            <class name="TestCases">
+                <methods>
+                    <include name="EnterToAccountTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="sortByNameTest">
+        <classes>
+            <class name="TestCases">
+                <methods>
+                    <include name="sortByNameTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="clientSearchByFirstNameTest">
+        <classes>
+            <class name="TestCases">
+                <methods>
+                    <include name="clientSearchByFirstNameTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="clientSearchBySecondNameTest">
+        <classes>
+            <class name="TestCases">
+                <methods>
+                    <include name="clientSearchBySecondNameTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="clientSearchByPostCodeTest">
+        <classes>
+            <class name="TestCases">
+                <methods>
+                    <include name="clientSearchByPostCodeTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

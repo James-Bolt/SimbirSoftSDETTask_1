@@ -24,9 +24,9 @@ public class TestCases extends MainTest {
 
         mainPage.customersButtonClick();
 
-        Assert.assertEquals(mainPage.firstNameContainerGetText(), "TestFirstName");
-        Assert.assertEquals(mainPage.secondNameContainerGetText(), "TestSecondName");
-        Assert.assertEquals(mainPage.postCodeContainerGetText(), "TestPostCode");
+        Assert.assertEquals(mainPage.firstNameContainerGetText(), "TestFirstName", "Values do not match");
+        Assert.assertEquals(mainPage.secondNameContainerGetText(), "TestSecondName", "Values do not match");
+        Assert.assertEquals(mainPage.postCodeContainerGetText(), "TestPostCode", "Values do not match");
     }
 
     @Test(groups = "CreationOfAccount")
@@ -70,7 +70,7 @@ public class TestCases extends MainTest {
 
         mainPage.customersButtonClick();
 
-        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers);
+        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers, "Values do not match");
     }
 
     @Test(groups = "CreationOfAccount")
@@ -105,8 +105,8 @@ public class TestCases extends MainTest {
                 .clientFieldButtonClick()
                 .loginButtonClick();
 
-        Assert.assertEquals(mainPage.welcomeStringGetText(), "Welcome TestFirstName TestSecondName !!");
-        Assert.assertEquals(mainPage.accountNumberGetText(), trueNextAccountNumbers.split(" ")[0]);
+        Assert.assertEquals(mainPage.welcomeStringGetText(), "Welcome TestFirstName TestSecondName !!", "Values do not match");
+        Assert.assertEquals(mainPage.accountNumberGetText(), trueNextAccountNumbers.split(" ")[0], "Values do not match");
     }
 
     @Test
@@ -134,17 +134,17 @@ public class TestCases extends MainTest {
         mainPage.customersButtonClick()
                 .firstNameButtonClick();
 
-        Assert.assertEquals(mainPage.firstNameFirstCellGetText(), "ZZZZZZ");
-        Assert.assertEquals(mainPage.firstNameLastCellGetText(), "AAAAAA");
-        Assert.assertEquals(mainPage.secondNameContainerGetText(), "TestSecondName");
-        Assert.assertEquals(mainPage.postCodeContainerGetText(), "TestPostCode");
+        Assert.assertEquals(mainPage.firstNameFirstCellGetText(), "ZZZZZZ", "Values do not match");
+        Assert.assertEquals(mainPage.firstNameLastCellGetText(), "AAAAAA", "Values do not match");
+        Assert.assertEquals(mainPage.secondNameContainerGetText(), "TestSecondName", "Values do not match");
+        Assert.assertEquals(mainPage.postCodeContainerGetText(), "TestPostCode", "Values do not match");
 
         mainPage.firstNameButtonClick();
 
-        Assert.assertEquals(mainPage.firstNameFirstCellGetText(), "AAAAAA");
-        Assert.assertEquals(mainPage.firstNameLastCellGetText(), "ZZZZZZ");
-        Assert.assertEquals(mainPage.secondNameContainerGetText(), "TestSecondName");
-        Assert.assertEquals(mainPage.postCodeContainerGetText(), "TestPostCode");
+        Assert.assertEquals(mainPage.firstNameFirstCellGetText(), "AAAAAA", "Values do not match");
+        Assert.assertEquals(mainPage.firstNameLastCellGetText(), "ZZZZZZ", "Values do not match");
+        Assert.assertEquals(mainPage.secondNameContainerGetText(), "TestSecondName", "Values do not match");
+        Assert.assertEquals(mainPage.postCodeContainerGetText(), "TestPostCode", "Values do not match");
     }
 
     @Test(groups = "clientSearch")
@@ -177,7 +177,7 @@ public class TestCases extends MainTest {
         mainPage.customersButtonClick()
                 .inputStrInSearchCustomerField("TestFirstName");
 
-        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers);
+        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers, "Values do not match");
     }
 
     @Test(groups = "clientSearch")
@@ -210,7 +210,7 @@ public class TestCases extends MainTest {
         mainPage.customersButtonClick()
                 .inputStrInSearchCustomerField("TestSecondName");
 
-        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers);
+        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers, "Values do not match");
     }
 
     @Test(groups = "clientSearch")
@@ -243,6 +243,6 @@ public class TestCases extends MainTest {
         mainPage.customersButtonClick()
                 .inputStrInSearchCustomerField("TestPostCode");
 
-        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers);
+        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers, "Values do not match");
     }
 }

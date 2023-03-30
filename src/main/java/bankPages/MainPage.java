@@ -9,52 +9,52 @@ import org.openqa.selenium.support.PageFactory;
 public class MainPage {
     private final WebDriver driver;
 
-    @FindBy(xpath = "//button[contains(text(),'Bank Manager Login')]")
+    @FindBy(xpath = "//button[@ng-click=\"manager()\"]")
     private WebElement bankManagerLoginButton;
 
-    @FindBy(xpath = "//body/div[1]/div[1]/div[2]/div[1]/div[1]/button[1]")
+    @FindBy(xpath = "//button[@ng-click=\"addCust()\"]")
     private WebElement addCustomerButtonFirst;
 
-    @FindBy(xpath = "//body/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/form[1]/div[1]/input[1]")
+    @FindBy(xpath = "//input[@ng-model=\"fName\"]")
     private WebElement firstNameField;
 
-    @FindBy(xpath = "//body/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/form[1]/div[2]/input[1]")
+    @FindBy(xpath = "//input[@ng-model=\"lName\"]")
     private WebElement secondNameField;
 
-    @FindBy(xpath = "//body/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/form[1]/div[3]/input[1]")
+    @FindBy(xpath = "//input[@ng-model=\"postCd\"]")
     private WebElement postCodeField;
 
-    @FindBy(xpath = "//body/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/form[1]/button[1]")
+    @FindBy(xpath = "//button[@type=\"submit\"]")
     private WebElement addCustomerButtonSecond;
 
-    @FindBy(xpath = "//body/div[1]/div[1]/div[2]/div[1]/div[1]/button[3]")
+    @FindBy(xpath = "//button[@ng-click=\"showCust()\"]")
     private WebElement customersButton;
 
-    @FindBy(xpath = "//td[contains(text(),'TestFirstName')]")
+    @FindBy(xpath = "//tbody/tr[last()]/td[1]")
     private WebElement firstNameContainer;
 
-    @FindBy(xpath = "//td[contains(text(),'TestSecondName')]")
+    @FindBy(xpath = "//tbody/tr[last()]/td[2]")
     private WebElement secondNameContainer;
 
-    @FindBy(xpath = "//td[contains(text(),'TestPostCode')]")
+    @FindBy(xpath = "//tbody/tr[last()]/td[3]")
     private WebElement postCodeContainer;
 
-    @FindBy(xpath = "//body/div[1]/div[1]/div[2]/div[1]/div[1]/button[2]")
+    @FindBy(xpath = "//button[@ng-click=\"openAccount()\"]")
     private WebElement openAccountButton;
 
-    @FindBy(xpath = "/html[1]/body[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/form[1]/div[1]/select[1]//option[last()]")
+    @FindBy(xpath = "//select[@id=\"userSelect\"]//option[last()]")
     private WebElement customerChooseForm;
 
-    @FindBy(xpath = "//option[contains(text(),'Dollar')]")
+    @FindBy(xpath = "//select[@id=\"currency\"]//option[@value=\"Dollar\"]")
     private WebElement currencyDollar;
 
-    @FindBy(xpath = "//option[contains(text(),'Pound')]")
+    @FindBy(xpath = "//select[@id=\"currency\"]//option[@value=\"Pound\"]")
     private WebElement currencyPound;
 
-    @FindBy(xpath = "//option[contains(text(),'Rupee')]")
+    @FindBy(xpath = "//select[@id=\"currency\"]//option[@value=\"Rupee\"]")
     private WebElement currencyRupee;
 
-    @FindBy(xpath = "//button[contains(text(),'Process')]")
+    @FindBy(xpath = "//button[@type=\"submit\"]")
     private WebElement processButton;
 
     @FindBy(xpath = "//tbody/tr[last()]/td[4]")
@@ -69,25 +69,25 @@ public class MainPage {
     @FindBy(xpath = "//tbody/tr[last()]/td[1]")
     private WebElement firstNameLastCell;
 
-    @FindBy(xpath = "//body/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/form[1]/div[1]/div[1]/input[1]")
+    @FindBy(xpath = "//input[@ng-model=\"searchCustomer\"]")
     private WebElement searchCustomerField;
 
-    @FindBy(xpath = "//button[contains(text(),'Home')]")
+    @FindBy(xpath = "//button[@ng-click=\"home()\"]")
     private WebElement homeButton;
 
-    @FindBy(xpath = "//button[contains(text(),'Customer Login')]")
+    @FindBy(xpath = "//button[@ng-click=\"customer()\"]")
     private WebElement customerLoginButton;
 
-    @FindBy(xpath = "//option[last()]")
+    @FindBy(xpath = "//select[@id=\"userSelect\"]//option[last()]")
     private WebElement clientFieldButton;
 
-    @FindBy(xpath = "//button[contains(text(),'Login')]")
+    @FindBy(xpath = "//button[@type=\"submit\"]")
     private WebElement loginButton;
 
-    @FindBy(xpath = "//body[1]/div[1]/div[1]/div[2]/div[1]/div[1]/strong[1]")
+    @FindBy(xpath = "//div[2]/div[1]/div[1]/strong[1]")
     private WebElement welcomeString;
 
-    @FindBy(xpath = "/html[1]/body[1]/div[1]/div[1]/div[2]/div[1]/div[2]/strong[1]")
+    @FindBy(xpath = "//div[@class=\"center\"]/strong[1]")
     private WebElement accountNumber;
 
     @Step("Нажатие кнопки bankManagerLogin")

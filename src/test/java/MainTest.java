@@ -1,3 +1,4 @@
+import bankPages.MainPage;
 import config.MainConfig;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.WebDriver;
@@ -9,6 +10,8 @@ import java.time.Duration;
 
 public class MainTest {
     protected WebDriver driver;
+    protected MainPage mainPage;
+    protected String trueNextAccountNumbers;
 
     private final MainConfig config = ConfigFactory.create(MainConfig.class, System.getenv());
 
@@ -20,10 +23,29 @@ public class MainTest {
         driver.get(config.url());
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
+        mainPage = new MainPage(driver);
+
+        trueNextAccountNumbers = mainPage.bankManagerLoginButtonClick()
+                .customersButtonClick()
+                .findNextAccountNumbers(3);
+
+        mainPage.homeButtonClick()
+                .bankManagerLoginButtonClick()
+                .addCustomerButtonFirstClick()
+                .inputStrInFirstNameField("TestFirstName")
+                .inputStrInSecondNameField("TestSecondName")
+                .inputStrInPostCodeField("TestPostCode")
+                .addCustomerButtonSecondClick();
+        driver.switchTo().alert().accept();
+        mainPage.homeButtonClick();
     }
 
     @AfterMethod
     public void tearDown() {
+        mainPage.homeButtonClick()
+                .bankManagerLoginButtonClick()
+                .customersButtonClick()
+                .deleteButtonClick();
         driver.close();
     }
 }

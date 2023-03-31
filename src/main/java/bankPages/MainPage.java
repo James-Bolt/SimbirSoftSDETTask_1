@@ -90,6 +90,9 @@ public class MainPage {
     @FindBy(xpath = "//div[@class=\"center\"]/strong[1]")
     private WebElement accountNumber;
 
+    @FindBy(xpath = "//tbody/tr[last()]/td[5]/button")
+    private WebElement deleteButton;
+
     @Step("Нажатие кнопки bankManagerLogin")
     public MainPage bankManagerLoginButtonClick() {
         bankManagerLoginButton.click();
@@ -240,7 +243,7 @@ public class MainPage {
         return this;
     }
 
-    @Step("Нажатие кнопки логин")
+    @Step("Нажатие кнопки login")
     public MainPage loginButtonClick() {
         loginButton.click();
         return this;
@@ -253,6 +256,12 @@ public class MainPage {
 
     public String accountNumberGetText() {
         return accountNumber.getText();
+    }
+
+    @Step("Удаление пользователя")
+    public MainPage deleteButtonClick() {
+        deleteButton.click();
+        return this;
     }
 
     public MainPage(final WebDriver driver) {

@@ -1,17 +1,18 @@
 import bankPages.MainPage;
+import config.AssertsConfig;
 import io.qameta.allure.Description;
+import org.aeonbits.owner.ConfigFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class TestCases extends MainTest {
 
-    MainPage mainPage;
+    private final AssertsConfig config = ConfigFactory.create(AssertsConfig.class, System.getenv());
 
-    @Test(groups = "CreationOfAccount")
+    @Test()
     @Description("Создание аккаунта")
     public void createAnAccountTest() {
-
-        mainPage = new MainPage(driver);
 
         mainPage.bankManagerLoginButtonClick()
                 .addCustomerButtonFirstClick()
@@ -19,230 +20,141 @@ public class TestCases extends MainTest {
                 .inputStrInSecondNameField("TestSecondName")
                 .inputStrInPostCodeField("TestPostCode")
                 .addCustomerButtonSecondClick();
-
         driver.switchTo().alert().accept();
+        mainPage.homeButtonClick()
+                .bankManagerLoginButtonClick()
+                .customersButtonClick();
 
-        mainPage.customersButtonClick();
-
-        Assert.assertEquals(mainPage.firstNameContainerGetText(), "TestFirstName", "Values do not match");
-        Assert.assertEquals(mainPage.secondNameContainerGetText(), "TestSecondName", "Values do not match");
-        Assert.assertEquals(mainPage.postCodeContainerGetText(), "TestPostCode", "Values do not match");
+        SoftAssert softAssertion = new SoftAssert();
+        softAssertion.assertEquals(mainPage.firstNameContainerGetText(), config.expectedFirstName(), config.errorMessage());
+        softAssertion.assertEquals(mainPage.secondNameContainerGetText(), config.expectedSecondName(), config.errorMessage());
+        softAssertion.assertEquals(mainPage.postCodeContainerGetText(), config.expectedPostCode(), config.errorMessage());
+        softAssertion.assertAll();
     }
 
-    @Test(groups = "CreationOfAccount")
+    @Test
     @Description("Добавление номеров счёта клиенту")
     public void addAccountNumbersTest() {
 
-        mainPage = new MainPage(driver);
-
-        String trueNextAccountNumbers = mainPage.bankManagerLoginButtonClick()
-                .customersButtonClick()
-                .findNextAccountNumbers(3);
-
-        mainPage.homeButtonClick()
-                .bankManagerLoginButtonClick()
-                .addCustomerButtonFirstClick()
-                .inputStrInFirstNameField("TestFirstName")
-                .inputStrInSecondNameField("TestSecondName")
-                .inputStrInPostCodeField("TestPostCode")
-                .addCustomerButtonSecondClick();
-
-        driver.switchTo().alert().accept();
-
-        mainPage.openAccountButtonClick()
+        mainPage.bankManagerLoginButtonClick()
+                .openAccountButtonClick()
                 .customerChooseFormClick()
                 .currencyDollarClick()
                 .processButtonClick();
-
         driver.switchTo().alert().accept();
-
         mainPage.customerChooseFormClick()
                 .currencyPoundClick()
                 .processButtonClick();
-
         driver.switchTo().alert().accept();
-
         mainPage.customerChooseFormClick()
                 .currencyRupeeClick()
                 .processButtonClick();
-
         driver.switchTo().alert().accept();
-
         mainPage.customersButtonClick();
 
-        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers, "Values do not match");
+        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers, config.errorMessage());
     }
 
-    @Test(groups = "CreationOfAccount")
+    @Test
     @Description("Вход в аккаунт клиента")
-    public void EnterToAccountTest() {
+    public void enterToAccountTest() {
 
-        mainPage = new MainPage(driver);
-
-        String trueNextAccountNumbers = mainPage.bankManagerLoginButtonClick()
-                .customersButtonClick()
-                .findNextAccountNumbers(3);
-
-        mainPage.homeButtonClick()
-                .bankManagerLoginButtonClick()
-                .addCustomerButtonFirstClick()
-                .inputStrInFirstNameField("TestFirstName")
-                .inputStrInSecondNameField("TestSecondName")
-                .inputStrInPostCodeField("TestPostCode")
-                .addCustomerButtonSecondClick();
-
-        driver.switchTo().alert().accept();
-
-        mainPage.openAccountButtonClick()
+        mainPage.bankManagerLoginButtonClick()
+                .openAccountButtonClick()
                 .customerChooseFormClick()
                 .currencyDollarClick()
                 .processButtonClick();
-
         driver.switchTo().alert().accept();
-
         mainPage.homeButtonClick()
                 .customerLoginButtonClick()
                 .clientFieldButtonClick()
                 .loginButtonClick();
 
-        Assert.assertEquals(mainPage.welcomeStringGetText(), "Welcome TestFirstName TestSecondName !!", "Values do not match");
-        Assert.assertEquals(mainPage.accountNumberGetText(), trueNextAccountNumbers.split(" ")[0], "Values do not match");
+        SoftAssert softAssertion = new SoftAssert();
+        softAssertion.assertEquals(mainPage.welcomeStringGetText(), "Welcome TestFirstName TestSecondName !!", config.errorMessage());
+        softAssertion.assertEquals(mainPage.accountNumberGetText(), trueNextAccountNumbers.split(" ")[0], config.errorMessage());
+        softAssertion.assertAll();
     }
 
     @Test
     @Description("Сортировка по имени")
     public void sortByNameTest() {
 
-        mainPage = new MainPage(driver);
-
         mainPage.bankManagerLoginButtonClick()
                 .addCustomerButtonFirstClick()
                 .inputStrInFirstNameField("ZZZZZZ")
-                .inputStrInSecondNameField("TestSecondName")
-                .inputStrInPostCodeField("TestPostCode")
+                .inputStrInSecondNameField(config.expectedSecondName())
+                .inputStrInPostCodeField(config.expectedPostCode())
                 .addCustomerButtonSecondClick();
-
         driver.switchTo().alert().accept();
-
         mainPage.inputStrInFirstNameField("AAAAAA")
-                .inputStrInSecondNameField("TestSecondName")
-                .inputStrInPostCodeField("TestPostCode")
+                .inputStrInSecondNameField(config.expectedSecondName())
+                .inputStrInPostCodeField(config.expectedPostCode())
                 .addCustomerButtonSecondClick();
-
         driver.switchTo().alert().accept();
-
         mainPage.customersButtonClick()
                 .firstNameButtonClick();
 
-        Assert.assertEquals(mainPage.firstNameFirstCellGetText(), "ZZZZZZ", "Values do not match");
-        Assert.assertEquals(mainPage.firstNameLastCellGetText(), "AAAAAA", "Values do not match");
-        Assert.assertEquals(mainPage.secondNameContainerGetText(), "TestSecondName", "Values do not match");
-        Assert.assertEquals(mainPage.postCodeContainerGetText(), "TestPostCode", "Values do not match");
+        SoftAssert softAssertion = new SoftAssert();
+        softAssertion.assertEquals(mainPage.firstNameFirstCellGetText(), "ZZZZZZ", config.errorMessage());
+        softAssertion.assertEquals(mainPage.firstNameLastCellGetText(), "AAAAAA", config.errorMessage());
+        softAssertion.assertEquals(mainPage.secondNameContainerGetText(), config.expectedSecondName(), config.errorMessage());
+        softAssertion.assertEquals(mainPage.postCodeContainerGetText(), config.expectedPostCode(), config.errorMessage());
+        softAssertion.assertAll();
 
         mainPage.firstNameButtonClick();
 
-        Assert.assertEquals(mainPage.firstNameFirstCellGetText(), "AAAAAA", "Values do not match");
-        Assert.assertEquals(mainPage.firstNameLastCellGetText(), "ZZZZZZ", "Values do not match");
-        Assert.assertEquals(mainPage.secondNameContainerGetText(), "TestSecondName", "Values do not match");
-        Assert.assertEquals(mainPage.postCodeContainerGetText(), "TestPostCode", "Values do not match");
+        softAssertion.assertEquals(mainPage.firstNameFirstCellGetText(), "AAAAAA", config.errorMessage());
+        softAssertion.assertEquals(mainPage.firstNameLastCellGetText(), "ZZZZZZ", config.errorMessage());
+        softAssertion.assertEquals(mainPage.secondNameContainerGetText(), config.expectedSecondName(), config.errorMessage());
+        softAssertion.assertEquals(mainPage.postCodeContainerGetText(), config.expectedPostCode(), config.errorMessage());
+        softAssertion.assertAll();
     }
 
-    @Test(groups = "clientSearch")
+    @Test
     @Description("Поиск клиента по имени")
     public void clientSearchByFirstNameTest() {
 
-        mainPage = new MainPage(driver);
-
-        String trueNextAccountNumbers = mainPage.bankManagerLoginButtonClick()
-                .customersButtonClick()
-                .findNextAccountNumbers(1);
-
-        mainPage.homeButtonClick()
-                .bankManagerLoginButtonClick()
-                .addCustomerButtonFirstClick()
-                .inputStrInFirstNameField("TestFirstName")
-                .inputStrInSecondNameField("TestSecondName")
-                .inputStrInPostCodeField("TestPostCode")
-                .addCustomerButtonSecondClick();
-
-        driver.switchTo().alert().accept();
-
-        mainPage.openAccountButtonClick()
+        mainPage.bankManagerLoginButtonClick()
+                .openAccountButtonClick()
                 .customerChooseFormClick()
                 .currencyDollarClick()
                 .processButtonClick();
-
         driver.switchTo().alert().accept();
-
         mainPage.customersButtonClick()
                 .inputStrInSearchCustomerField("TestFirstName");
-
-        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers, "Values do not match");
+        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers.split(" ")[0], config.errorMessage());
     }
 
-    @Test(groups = "clientSearch")
+    @Test
     @Description("Поиск клиента по фамилии")
     public void clientSearchBySecondNameTest() {
 
-        mainPage = new MainPage(driver);
-
-        String trueNextAccountNumbers = mainPage.bankManagerLoginButtonClick()
-                .customersButtonClick()
-                .findNextAccountNumbers(1);
-
-        mainPage.homeButtonClick()
-                .bankManagerLoginButtonClick()
-                .addCustomerButtonFirstClick()
-                .inputStrInFirstNameField("TestFirstName")
-                .inputStrInSecondNameField("TestSecondName")
-                .inputStrInPostCodeField("TestPostCode")
-                .addCustomerButtonSecondClick();
-
-        driver.switchTo().alert().accept();
-
-        mainPage.openAccountButtonClick()
+        mainPage.bankManagerLoginButtonClick()
+                .openAccountButtonClick()
                 .customerChooseFormClick()
                 .currencyDollarClick()
                 .processButtonClick();
-
         driver.switchTo().alert().accept();
-
         mainPage.customersButtonClick()
                 .inputStrInSearchCustomerField("TestSecondName");
 
-        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers, "Values do not match");
+        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers.split(" ")[0], config.errorMessage());
     }
 
-    @Test(groups = "clientSearch")
+    @Test
     @Description("Поиск клиента по почтовому индексу")
     public void clientSearchByPostCodeTest() {
 
-        mainPage = new MainPage(driver);
-
-        String trueNextAccountNumbers = mainPage.bankManagerLoginButtonClick()
-                .customersButtonClick()
-                .findNextAccountNumbers(1);
-
-        mainPage.homeButtonClick()
-                .bankManagerLoginButtonClick()
-                .addCustomerButtonFirstClick()
-                .inputStrInFirstNameField("TestFirstName")
-                .inputStrInSecondNameField("TestSecondName")
-                .inputStrInPostCodeField("TestPostCode")
-                .addCustomerButtonSecondClick();
-
-        driver.switchTo().alert().accept();
-
-        mainPage.openAccountButtonClick()
+        mainPage.bankManagerLoginButtonClick()
+                .openAccountButtonClick()
                 .customerChooseFormClick()
                 .currencyDollarClick()
                 .processButtonClick();
-
         driver.switchTo().alert().accept();
-
         mainPage.customersButtonClick()
                 .inputStrInSearchCustomerField("TestPostCode");
 
-        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers, "Values do not match");
+        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers.split(" ")[0], config.errorMessage());
     }
 }

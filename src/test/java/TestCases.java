@@ -1,4 +1,3 @@
-import bankPages.MainPage;
 import config.AssertsConfig;
 import io.qameta.allure.Description;
 import org.aeonbits.owner.ConfigFactory;
@@ -16,9 +15,9 @@ public class TestCases extends MainTest {
 
         mainPage.bankManagerLoginButtonClick()
                 .addCustomerButtonFirstClick()
-                .inputStrInFirstNameField("TestFirstName")
-                .inputStrInSecondNameField("TestSecondName")
-                .inputStrInPostCodeField("TestPostCode")
+                .inputStrInFirstNameField("FirstName")
+                .inputStrInSecondNameField("SecondName")
+                .inputStrInPostCodeField("PostCode")
                 .addCustomerButtonSecondClick();
         driver.switchTo().alert().accept();
         mainPage.homeButtonClick()
@@ -26,10 +25,12 @@ public class TestCases extends MainTest {
                 .customersButtonClick();
 
         SoftAssert softAssertion = new SoftAssert();
-        softAssertion.assertEquals(mainPage.firstNameContainerGetText(), config.expectedFirstName(), config.errorMessage());
-        softAssertion.assertEquals(mainPage.secondNameContainerGetText(), config.expectedSecondName(), config.errorMessage());
-        softAssertion.assertEquals(mainPage.postCodeContainerGetText(), config.expectedPostCode(), config.errorMessage());
+        softAssertion.assertEquals(mainPage.firstNameContainerGetText(), "FirstName", config.errorMessage());
+        softAssertion.assertEquals(mainPage.secondNameContainerGetText(), "SecondName", config.errorMessage());
+        softAssertion.assertEquals(mainPage.postCodeContainerGetText(), "PostCode", config.errorMessage());
         softAssertion.assertAll();
+
+        mainPage.deleteButtonClick();
     }
 
     @Test
@@ -156,5 +157,22 @@ public class TestCases extends MainTest {
                 .inputStrInSearchCustomerField("TestPostCode");
 
         Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers.split(" ")[0], config.errorMessage());
+    }
+
+    @Test
+    @Description("Добавление одинаковых пользователей")
+    public void addingIdenticalUsers() {
+
+        mainPage.homeButtonClick()
+                .bankManagerLoginButtonClick()
+                .addCustomerButtonFirstClick()
+                .inputStrInFirstNameField("TestFirstName")
+                .inputStrInSecondNameField("TestSecondName")
+                .inputStrInPostCodeField("TestPostCode")
+                .addCustomerButtonSecondClick();
+
+        Assert.assertEquals(driver.switchTo().alert().getText(), "Please check the details. Customer may be duplicate.", config.errorMessage());
+
+        driver.switchTo().alert().accept();
     }
 }

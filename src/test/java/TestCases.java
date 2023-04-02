@@ -5,6 +5,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class TestCases extends MainTest {
 
     private final AssertsConfig config = ConfigFactory.create(AssertsConfig.class, System.getenv());
@@ -82,33 +85,19 @@ public class TestCases extends MainTest {
     public void sortByNameTest() {
 
         mainPage.bankManagerLoginButtonClick()
-                .addCustomerButtonFirstClick()
-                .inputStrInFirstNameField("ZZZZZZ")
-                .inputStrInSecondNameField(config.expectedSecondName())
-                .inputStrInPostCodeField(config.expectedPostCode())
-                .addCustomerButtonSecondClick();
-        driver.switchTo().alert().accept();
-        mainPage.inputStrInFirstNameField("AAAAAA")
-                .inputStrInSecondNameField(config.expectedSecondName())
-                .inputStrInPostCodeField(config.expectedPostCode())
-                .addCustomerButtonSecondClick();
-        driver.switchTo().alert().accept();
-        mainPage.customersButtonClick()
-                .firstNameButtonClick();
+                .customersButtonClick();
 
-        SoftAssert softAssertion = new SoftAssert();
-        softAssertion.assertEquals(mainPage.firstNameFirstCellGetText(), "ZZZZZZ", config.errorMessage());
-        softAssertion.assertEquals(mainPage.firstNameLastCellGetText(), "AAAAAA", config.errorMessage());
-        softAssertion.assertEquals(mainPage.secondNameContainerGetText(), config.expectedSecondName(), config.errorMessage());
-        softAssertion.assertEquals(mainPage.postCodeContainerGetText(), config.expectedPostCode(), config.errorMessage());
-        softAssertion.assertAll();
-
+        String[] expectedSort = mainPage.parseCustomers();
+        Arrays.sort(expectedSort, Comparator.reverseOrder());
         mainPage.firstNameButtonClick();
 
-        softAssertion.assertEquals(mainPage.firstNameFirstCellGetText(), "AAAAAA", config.errorMessage());
-        softAssertion.assertEquals(mainPage.firstNameLastCellGetText(), "ZZZZZZ", config.errorMessage());
-        softAssertion.assertEquals(mainPage.secondNameContainerGetText(), config.expectedSecondName(), config.errorMessage());
-        softAssertion.assertEquals(mainPage.postCodeContainerGetText(), config.expectedPostCode(), config.errorMessage());
+        SoftAssert softAssertion = new SoftAssert();
+        softAssertion.assertEquals(Arrays.toString(mainPage.parseCustomers()), Arrays.toString(expectedSort), config.errorMessage());
+
+        mainPage.firstNameButtonClick();
+        Arrays.sort(expectedSort, Comparator.naturalOrder());
+
+        softAssertion.assertEquals(Arrays.toString(mainPage.parseCustomers()), Arrays.toString(expectedSort), config.errorMessage());
         softAssertion.assertAll();
     }
 

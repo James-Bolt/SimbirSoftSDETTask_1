@@ -1,10 +1,13 @@
 package bankPages;
 
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.List;
 
 public class MainPage {
     private final WebDriver driver;
@@ -262,6 +265,31 @@ public class MainPage {
     public MainPage deleteButtonClick() {
         deleteButton.click();
         return this;
+    }
+
+    @Step("Парсинг таблицы имён пользователей")
+    public String[] parseCustomers() {
+        String[] customersNames;
+        int i = 1;
+        boolean flag = false;
+        List<WebElement> elements = driver.findElements(By.xpath("//tbody/tr/td[1]"));
+        customersNames = new String[elements.size()];
+        if (elements.size() < 2) {
+            addCustomerButtonFirstClick()
+                    .inputStrInFirstNameField("TestNameForSort")
+                    .inputStrInSecondNameField("TestSecondNameForSort")
+                    .inputStrInPostCodeField("TestPostCodeForSort")
+                    .addCustomerButtonSecondClick();
+            driver.switchTo().alert().accept();
+            customersButtonClick();
+            flag = true;
+        }
+        for (WebElement element : elements) {
+            customersNames[i - 1] += element.getText();
+            i++;
+        }
+        if (flag) deleteButtonClick();
+        return customersNames;
     }
 
     public MainPage(final WebDriver driver) {

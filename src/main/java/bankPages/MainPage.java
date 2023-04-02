@@ -66,12 +66,6 @@ public class MainPage {
     @FindBy(xpath = "//thead/tr[1]/td[1]/a[1]")
     private WebElement firstNameButton;
 
-    @FindBy(xpath = "//tbody/tr[1]/td[1]")
-    private WebElement firstNameFirstCell;
-
-    @FindBy(xpath = "//tbody/tr[last()]/td[1]")
-    private WebElement firstNameLastCell;
-
     @FindBy(xpath = "//input[@ng-model=\"searchCustomer\"]")
     private WebElement searchCustomerField;
 
@@ -210,16 +204,6 @@ public class MainPage {
     public MainPage firstNameButtonClick() {
         firstNameButton.click();
         return this;
-    }
-
-    @Step("Получение имени клиента из первой ячейки таблицы")
-    public String firstNameFirstCellGetText() {
-        return firstNameFirstCell.getText();
-    }
-
-    @Step("Получение имени клиента из последней ячейки таблицы")
-    public String firstNameLastCellGetText() {
-        return firstNameLastCell.getText();
     }
 
     @Step("Ввод строки в поле поиска")

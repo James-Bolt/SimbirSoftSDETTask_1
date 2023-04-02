@@ -63,7 +63,7 @@ public class MainPage {
     @FindBy(xpath = "//tbody/tr[last()]/td[4]")
     private WebElement accountNumberContainer;
 
-    @FindBy(xpath = "//thead/tr[1]/td[1]/a[1]")
+    @FindBy(xpath = "//thead//*[contains(@ng-click, \"fName\")]")
     private WebElement firstNameButton;
 
     @FindBy(xpath = "//input[@ng-model=\"searchCustomer\"]")
@@ -81,13 +81,13 @@ public class MainPage {
     @FindBy(xpath = "//button[@type=\"submit\"]")
     private WebElement loginButton;
 
-    @FindBy(xpath = "//div[2]/div[1]/div[1]/strong[1]")
+    @FindBy(xpath = "//select[@id=\"accountSelect\"]/../..//*[contains(text(), \" Welcome \")]")
     private WebElement welcomeString;
 
-    @FindBy(xpath = "//div[@class=\"center\"]/strong[1]")
+    @FindBy(xpath = "//select[@id=\"accountSelect\"]/../..//*[@class=\"center\"]/strong[1]")
     private WebElement accountNumber;
 
-    @FindBy(xpath = "//tbody/tr[last()]/td[5]/button")
+    @FindBy(xpath = "//tbody//tr[last()]//button[@ng-click=\"deleteCust(cust)\"]")
     private WebElement deleteButton;
 
     @Step("Нажатие кнопки bankManagerLogin")
@@ -180,6 +180,7 @@ public class MainPage {
     @Step("Нажатие кнопки process (открытие валютного счёта)")
     public MainPage processButtonClick() {
         processButton.click();
+        driver.switchTo().alert().accept();
         return this;
     }
 

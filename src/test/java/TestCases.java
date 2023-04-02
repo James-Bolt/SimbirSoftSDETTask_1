@@ -44,17 +44,14 @@ public class TestCases extends MainTest {
                 .openAccountButtonClick()
                 .customerChooseFormClick()
                 .currencyDollarClick()
-                .processButtonClick();
-        driver.switchTo().alert().accept();
-        mainPage.customerChooseFormClick()
+                .processButtonClick()
+                .customerChooseFormClick()
                 .currencyPoundClick()
-                .processButtonClick();
-        driver.switchTo().alert().accept();
-        mainPage.customerChooseFormClick()
+                .processButtonClick()
+                .customerChooseFormClick()
                 .currencyRupeeClick()
-                .processButtonClick();
-        driver.switchTo().alert().accept();
-        mainPage.customersButtonClick();
+                .processButtonClick()
+                .customersButtonClick();
 
         Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers, config.errorMessage());
     }
@@ -67,9 +64,8 @@ public class TestCases extends MainTest {
                 .openAccountButtonClick()
                 .customerChooseFormClick()
                 .currencyDollarClick()
-                .processButtonClick();
-        driver.switchTo().alert().accept();
-        mainPage.homeButtonClick()
+                .processButtonClick()
+                .homeButtonClick()
                 .customerLoginButtonClick()
                 .clientFieldButtonClick()
                 .loginButtonClick();
@@ -92,12 +88,12 @@ public class TestCases extends MainTest {
         mainPage.firstNameButtonClick();
 
         SoftAssert softAssertion = new SoftAssert();
-        softAssertion.assertEquals(Arrays.toString(mainPage.parseCustomers()), Arrays.toString(expectedSort), config.errorMessage());
+        softAssertion.assertEquals(Arrays.toString(mainPage.parseCustomers()), Arrays.toString(expectedSort), "Array sorted incorrectly");
 
         mainPage.firstNameButtonClick();
         Arrays.sort(expectedSort, Comparator.naturalOrder());
 
-        softAssertion.assertEquals(Arrays.toString(mainPage.parseCustomers()), Arrays.toString(expectedSort), config.errorMessage());
+        softAssertion.assertEquals(Arrays.toString(mainPage.parseCustomers()), Arrays.toString(expectedSort), "Array sorted incorrectly");
         softAssertion.assertAll();
     }
 
@@ -109,10 +105,10 @@ public class TestCases extends MainTest {
                 .openAccountButtonClick()
                 .customerChooseFormClick()
                 .currencyDollarClick()
-                .processButtonClick();
-        driver.switchTo().alert().accept();
-        mainPage.customersButtonClick()
+                .processButtonClick()
+                .customersButtonClick()
                 .inputStrInSearchCustomerField("TestFirstName");
+
         Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers.split(" ")[0], config.errorMessage());
     }
 
@@ -124,9 +120,8 @@ public class TestCases extends MainTest {
                 .openAccountButtonClick()
                 .customerChooseFormClick()
                 .currencyDollarClick()
-                .processButtonClick();
-        driver.switchTo().alert().accept();
-        mainPage.customersButtonClick()
+                .processButtonClick()
+                .customersButtonClick()
                 .inputStrInSearchCustomerField("TestSecondName");
 
         Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers.split(" ")[0], config.errorMessage());
@@ -140,9 +135,8 @@ public class TestCases extends MainTest {
                 .openAccountButtonClick()
                 .customerChooseFormClick()
                 .currencyDollarClick()
-                .processButtonClick();
-        driver.switchTo().alert().accept();
-        mainPage.customersButtonClick()
+                .processButtonClick()
+                .customersButtonClick()
                 .inputStrInSearchCustomerField("TestPostCode");
 
         Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers.split(" ")[0], config.errorMessage());

@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainPage {
@@ -89,6 +90,9 @@ public class MainPage {
 
     @FindBy(xpath = "//tbody//tr[last()]//button[@ng-click=\"deleteCust(cust)\"]")
     private WebElement deleteButton;
+
+    @FindBy(xpath = "//tbody/tr/td[1]")
+    private List<WebElement> elements;
 
     @Step("Нажатие кнопки bankManagerLogin")
     public MainPage bankManagerLoginButtonClick() {
@@ -253,12 +257,9 @@ public class MainPage {
     }
 
     @Step("Парсинг таблицы имён пользователей")
-    public String[] parseCustomers() {
-        String[] customersNames;
-        int i = 1;
+    public ArrayList<String> parseCustomers() {
+        ArrayList<String> customersNames = new ArrayList<String>();
         boolean flag = false;
-        List<WebElement> elements = driver.findElements(By.xpath("//tbody/tr/td[1]"));
-        customersNames = new String[elements.size()];
         if (elements.size() < 2) {
             addCustomerButtonFirstClick()
                     .inputStrInFirstNameField("TestNameForSort")
@@ -269,10 +270,7 @@ public class MainPage {
             customersButtonClick();
             flag = true;
         }
-        for (WebElement element : elements) {
-            customersNames[i - 1] += element.getText();
-            i++;
-        }
+        elements.forEach(element -> customersNames.add(element.getText()));
         if (flag) deleteButtonClick();
         return customersNames;
     }

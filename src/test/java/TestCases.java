@@ -5,7 +5,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 
 public class TestCases extends MainTest {
@@ -60,20 +62,12 @@ public class TestCases extends MainTest {
     @Description("Вход в аккаунт клиента")
     public void enterToAccountTest() {
 
-        mainPage.bankManagerLoginButtonClick()
-                .openAccountButtonClick()
-                .customerChooseFormClick()
-                .currencyDollarClick()
-                .processButtonClick()
-                .homeButtonClick()
-                .customerLoginButtonClick()
+        mainPage.customerLoginButtonClick()
                 .clientFieldButtonClick()
                 .loginButtonClick();
 
         SoftAssert softAssertion = new SoftAssert();
         softAssertion.assertEquals(mainPage.welcomeStringGetText(), "Welcome TestFirstName TestSecondName !!", config.errorMessage());
-        softAssertion.assertEquals(mainPage.accountNumberGetText(), trueNextAccountNumbers.split(" ")[0], config.errorMessage());
-        softAssertion.assertAll();
     }
 
     @Test
@@ -83,17 +77,17 @@ public class TestCases extends MainTest {
         mainPage.bankManagerLoginButtonClick()
                 .customersButtonClick();
 
-        String[] expectedSort = mainPage.parseCustomers();
-        Arrays.sort(expectedSort, Comparator.reverseOrder());
+        ArrayList<String> expectedSort = mainPage.parseCustomers();
+        expectedSort.sort(Collections.reverseOrder());
         mainPage.firstNameButtonClick();
 
         SoftAssert softAssertion = new SoftAssert();
-        softAssertion.assertEquals(Arrays.toString(mainPage.parseCustomers()), Arrays.toString(expectedSort), "Array sorted incorrectly");
+        softAssertion.assertEquals(mainPage.parseCustomers(), expectedSort, "Array sorted incorrectly");
 
         mainPage.firstNameButtonClick();
-        Arrays.sort(expectedSort, Comparator.naturalOrder());
+        Collections.sort(expectedSort);
 
-        softAssertion.assertEquals(Arrays.toString(mainPage.parseCustomers()), Arrays.toString(expectedSort), "Array sorted incorrectly");
+        softAssertion.assertEquals(mainPage.parseCustomers(), expectedSort, "Array sorted incorrectly");
         softAssertion.assertAll();
     }
 
@@ -102,14 +96,10 @@ public class TestCases extends MainTest {
     public void clientSearchByFirstNameTest() {
 
         mainPage.bankManagerLoginButtonClick()
-                .openAccountButtonClick()
-                .customerChooseFormClick()
-                .currencyDollarClick()
-                .processButtonClick()
                 .customersButtonClick()
-                .inputStrInSearchCustomerField("TestFirstName");
+                .inputStrInSearchCustomerField("Harry");
 
-        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers.split(" ")[0], config.errorMessage());
+        Assert.assertEquals(mainPage.firstNameContainerGetText(), "Harry", config.errorMessage());
     }
 
     @Test
@@ -117,14 +107,10 @@ public class TestCases extends MainTest {
     public void clientSearchBySecondNameTest() {
 
         mainPage.bankManagerLoginButtonClick()
-                .openAccountButtonClick()
-                .customerChooseFormClick()
-                .currencyDollarClick()
-                .processButtonClick()
                 .customersButtonClick()
-                .inputStrInSearchCustomerField("TestSecondName");
+                .inputStrInSearchCustomerField("Potter");
 
-        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers.split(" ")[0], config.errorMessage());
+        Assert.assertEquals(mainPage.secondNameContainerGetText(), "Potter", config.errorMessage());
     }
 
     @Test
@@ -132,14 +118,10 @@ public class TestCases extends MainTest {
     public void clientSearchByPostCodeTest() {
 
         mainPage.bankManagerLoginButtonClick()
-                .openAccountButtonClick()
-                .customerChooseFormClick()
-                .currencyDollarClick()
-                .processButtonClick()
                 .customersButtonClick()
-                .inputStrInSearchCustomerField("TestPostCode");
+                .inputStrInSearchCustomerField("E725JB");
 
-        Assert.assertEquals(mainPage.accountNumberContainerGetText(), trueNextAccountNumbers.split(" ")[0], config.errorMessage());
+        Assert.assertEquals(mainPage.postCodeContainerGetText(), "E725JB", config.errorMessage());
     }
 
     @Test

@@ -82,10 +82,10 @@ public class MainPage {
     @FindBy(xpath = "//button[@type=\"submit\"]")
     private WebElement loginButton;
 
-    @FindBy(xpath = "//span[@class = \"fontBig ng-binding\"]/..")
+    @FindBy(xpath = "//strong[text()=' Welcome ']")
     private WebElement welcomeString;
 
-    @FindBy(xpath = "//*[@class = \"ng-binding\"][1]")
+    @FindBy(xpath = "//div[@ng-hide='noAccount']/strong[1]")
     private WebElement accountNumber;
 
     @FindBy(xpath = "//tbody//tr[last()]//button[@ng-click=\"deleteCust(cust)\"]")
